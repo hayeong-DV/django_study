@@ -1,0 +1,26 @@
+<!-- now태그 - 현재 날짜, 시간 원하는 포멧으로 출력 -->
+<h1>Post Archive until {% now "N d, Y" %}</h1>
+<ul>
+    {% for date in date_list %}
+    <!-- date_list컨텍스트 변수: DateQuerySet객체 리스트 담은거: 
+                            QuerySet 객체리스트에서 날짜 정보만 추출해 담고 있는거 -->
+
+        <li style='display : inline'>
+            <a href = "{% url 'blog:post_year_archive' date|date:'Y' %}">
+                Year - {{date|date:'Y'}} 
+            </a> 
+        </li> 
+    {% endfor %}
+</ul>
+<br/>
+
+<div>
+    <ul>
+        {% for post in object_list %}
+            <li>
+                {{ post.modify_dt|date:"Y-m-d"}}&nbsp;&nbsp;&nbsp;
+                <a href ="{{ post.get_abolute_url}}"><strong>{{post.title}}</strong></a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

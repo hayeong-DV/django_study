@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}post_all.html{% endblock %}
+
+
+
+{% block content %}
+    <h4>{{ object.title }}</h4>
+    <br>
+
+    <ul>
+        <li>URL: <a href="{{object.url}}">{{object.url}}</a></li>
+    </ul>
+
+
+    <h1>Blosg List</h1>
+    <br>
+
+    {% for post in posts %}
+        <h3><a href='{{ post.get_absolute_url }}'>{{ post.title }}</a></h3>
+        {{ post.moedify_dt|date:"N d, Y" }}
+        <p>{{ post.decription }}</p>
+    {%  endfor %}
+
+    <br>
+
+    <div>
+        <span>
+            {% if page_obj.has_previous %} 
+                <a href="?page={{ page_obj.previous_page_number }}">PreviousPage</a>
+            {% endif %}
+
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number}}">NEXTPage</a>
+            {% endif %}
+        
+        </span>
+    </div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
