@@ -9,6 +9,11 @@ from blog.models import Post
 from django.conf import settings
 # Create your views here.
 
+from django.views.generic import CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+from mysite.views import OwnerOnlyMixin
+
 
 class PostLV(ListView):
     model = Post
@@ -26,8 +31,6 @@ class PostDV(DetailView):
         context['disqus_url'] = f"{settings.DISQUS_MY_DOMAIN}{self.object.get_absolute_url()}"
         context['disqus_title'] = f"{self.object.slug}"
         return context
-
-
 
 
 class PostAV(ArchiveIndexView):
@@ -94,3 +97,30 @@ class SearchFormView(FormView):
         #form_valid는 보통 HttpResponseRedirect객체 반환
         #지금건 재정의한거
         return render(self.request, self.template_name, context)
+
+
+class PostCreateView(LoginRequiredMixin, CreateView):
+    model=Post
+    fields=['title','slug', 'description', 'content','tags']
+    initial={'slug': 'auto-filling-do-not-input'}
+    success_url = reverse_lazy('blog:index')
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
+
+class PostChangeLV(LoginRequiredMixin, ListView):
+    template_name = 'blog/post_change_list.html'
+
+    def get_queryset(self):
+        return Post.objects.filter(owner=self.request.user)
+
+class PostUpdateView(LoginRequiredMixin, UpdateView):
+    model = Post
+    fields=['title','slug', 'description', 'content','tags']
+    success_url = reverse_lazy('blog:index')
+
+class PostDeleteView(OwnerOnlyMixin, DeleteView):
+    model = Post
+    success_url = reverse_lazy('blog:index')
+

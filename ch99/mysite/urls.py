@@ -19,6 +19,12 @@ from django.urls import path, include
 # from bookmark.views import BookmarkLV, BookmarkDV
 # from bookmark.models import Bookmark
 from mysite.views import HomeView
+
+from django.conf.urls.static import static
+from django.conf import settings
+
+from mysite.views import UserCreateView, UserCreateDoneTV
+
 urlpatterns = [
     path('admin/', admin.site.urls),
  
@@ -28,7 +34,18 @@ urlpatterns = [
     #blog
     path('blog/', include('blog.urls')),
 
+    #photo
+    path('photo/', include('photo.urls')),
+
     #
     path('', HomeView.as_view(), name='home'),
 
-]
+
+    #인증관련
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/register', UserCreateView.as_view(), name='register'),
+    path('accounts/register/done/', UserCreateDoneTV.as_view(), name='register_done'),
+
+
+
+]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

@@ -41,12 +41,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'widget_tweaks',
     'bookmark.apps.BookmarkConfig',
     'blog.apps.BlogConfig',
     'mysite',
     'taggit.apps.TaggitAppConfig',
     'taggit_templatetags2',
-    'photo.apps.PhotoConfig'
+    'photo.apps.PhotoConfig',
 
 ]
 
@@ -142,9 +143,12 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR,'templates')]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-MEDIA_RUL = '/media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT= os.path.join(BASE_DIR,'media')
 
 
 DISQUS_SHORTNAME = 'pydjango-study-web'
 DISQUS_MY_DOMAIN = 'http://127.0.0.1:8000/'
+
+# LOGIN_URL= '/account/login'
+LOGIN_REDIRECT_URL='/'
