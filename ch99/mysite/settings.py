@@ -65,11 +65,19 @@ ROOT_URLCONF = 'mysite.urls'
 
 TEMPLATES = [
     {
+        #원래 적힌간 장고 자체 템플릿 엔진
+        #django.template.backends.jinja2.Jinja2
+        #파이썬 언어의 대표 템플릿 엔진
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        #프로젝트 템플릿 파일이 위치할 디렉터리 지정
+        #'DIRS-프로젝트 템플릿 파일이 위치할 디렉터리 지정
         'DIRS': [os.path.join(BASE_DIR,'templates')],
+        #앺플리케이션 내 템플릿 디렉토리에서도 찾을지 여부
         'APP_DIRS': True,
+        #
         'OPTIONS': {
+            #웹요청에 있는 파라미터들을 인자로 받아서
+            #컨첵스트 데이터로 사용될 사전을 만드는/ 호출 가능한 객체를 지정
+            #반환하는 사전은 최종 컨텍스트 데이터를  만들때 추가ㅣ
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',

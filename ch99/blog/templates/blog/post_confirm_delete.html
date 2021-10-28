@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+
+{% block title %}blog_confirm_delete.html{% endblock %}
+
+{% block content %}
+<h4>blog delete</h4>
+
+<form action='.' method='post'>
+    {% csrf_token %}
+    <p>{{object}} 지울거?</p>
+    <input type='submit' value='confirm' />
+</form>
+
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}  
+
+{% block title %}album_form.html{% endblock %}
+
+{% block content %}
+<h4>album create/update -{{user}}</h4>
+<p class='font-italic'>this is a create or update</p>
+
+{%if form.errors %}
+<div class='alert alert-danger'>
+    <div class='font-weight-bold'>Wrong! Please correct the errors below</div>
+    {{form.errors}}
+</div>
+{% endif %}
+
+
+{%if formset.errors %}
+<div class='alert alert-danger'>
+    <div class='font-weight-bold'>Wrong! Please correct the errors below</div>
+    {{formerrors}}
+</div>
+{% endif %}
+
+{% if form.is_multipart %}
+<!-- 폼이나 폼셋 체크해서 multipart인코딩 필요한지 여부 알려줌
+true면 enctpye=multipart/form-data로 지정 -->
+<form enctype="multipart/form-data" action='' method='post'>
+{% else %}
+<form action='' method='post'></form>
+{% endif %}
+    {% csrf_token %}  
+    <div class='form-group row'>
+        {{ form.name|add_label_class:"col-form-label col-sm-2 ml-3 font-weight-bold"}}
+        <div class='col-sm-5'>
+            {{form.name|add_class:'form-control'|attr:'autofocus'}}
+        </div>
+    </div>
+    <div class='form-group row'>
+        {{form.description|add_label_class:'col-form-label col-sm-2 ml-3 font-weight-bold'}}
+        <div class='col-sm-5'>
+            {{form.description|add_class:'form-control'}}
+        </div>
+    </div>
+
+    {{formset.management_form}}
+    <!-- 폼셋에 있는 각 폼을 다룰 경우 이 변수 반드시 추가 필요
+    장고의 템플릿엔진이 폼셋에 들어있는 폼의 개수 등을 알 수 있어야 하기 때문 -->
+    {% for form in formset %} 
+        {{form.id}}
+        {# form.album #}
+        <div class='form-group row'>
+            {{form.image|add_label_class:'col-form-label col-sm-2 ml-3 font-weight-bold'}}
+            <div class='col-sm-5'>
+                {{form.image|add_class:'form-control'}}
+            </div>
+        </div>
+        <div class='form-group row'>
+            {{form.title|add_label_class:'col-form-label col-sm-2 ml-3 font-weight-bold'}}
+            <div class='col-sm-5'>
+                {{form.title|add_class:'form-control'}}
+            </div>
+        </div>
+        <div class='form-group row'>
+            {{form.description|add_label_class:'col-form-label col-sm-2 ml-3 font-weight-bold'}}
+            <div class='col-sm-5'>
+                {{form.description|add_class:'form-control'}}
+            </div>
+        </div>
+        
+
+    {% endfor %}
+    
+   
+
+    <div class='form-group'>
+        <div class='offset-sm-2 col-sm-5'>
+            <input type='submit' value='register' class='btn btn-info'>
+        </div>
+    </div>
+</form>
+
+
+{% endblock %}

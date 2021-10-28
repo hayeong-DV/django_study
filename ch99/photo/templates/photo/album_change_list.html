@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+ 
+
+{% block title %}album_change_list.html{% endblock %}
+
+{% block content %}
+<h4>album change -{{user}}</h4>
+<p class='font-italic'>this is a create or update</p>
+
+<table class='table table-bordered table-condensed table-striped'>
+    <Thead>
+        <tr class='table-primary'>
+            <th>Name</th>
+            <th>description</th>
+            <th>owner</th>
+            <th>update</th>
+            <th>Delete</th>
+        </tr>
+    </Thead>
+    <tbody>
+        {% for item in object_list %}  
+        <tr>
+          <td>{{item.name}}</td>
+          <td>{{item.description}}</td>
+          <td>{{item.owner}}</td>
+          <td><a href="{% url 'photo:photo_update' item.id %}">update</a></td>
+          <td><a href="{% url 'photo:photo_delete' item.id %}">delete</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
